@@ -21,4 +21,17 @@ def parse(line)
   end
 end
 
+def interleave(*args)
+  raise 'No arrays to interleave' if args.empty?
+  max_length = args.map(&:size).max
+  output = []
+  max_length.times do |i|
+    args.each do |elem|
+      output << elem[i] if i < elem.length
+    end
+  end
+  output
+end
+
+
 parse(TEST_LINE)
