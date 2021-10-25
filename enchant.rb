@@ -5,33 +5,49 @@ end
 TEST_LINE = "U (smell|look|taste|sound) (beautiful|happy|cheerful) (today|every day)"
 
 def parse(line)
-  matches = line.scan(/\(.*?\)/)
   template = line
+
+  matches = line.scan(/\(.*?\)/)
   matches.each_with_index do |match, index|
     template = template.sub(match, "<#{index}>")
   end
   subbers = matches.map {|m| m.match(/\((.*)\)/)[1].split('|')}
+
+  return [template] if subbers.empty?
+
   em_all = get_em_all(*subbers)
+  outputs = []
+
   em_all.each do |arr|
     output = template
     arr.each_with_index do |part, index|
       output = output.sub("<#{index}>", part)
     end
-    puts output
+    outputs.push(output)
   end
+
+  return outputs
 end
+
+# def interleave(*args)
+#   raise 'No arrays to interleave' if args.empty?
+#   max_length = args.map(&:size).max
+#   output = []
+#   max_length.times do |i|
+#     args.each do |elem|
+#       output << elem[i] if i < elem.length
+#     end
+#   end
+#   output
+# end
 
 def interleave(*args)
   raise 'No arrays to interleave' if args.empty?
   max_length = args.map(&:size).max
-  output = []
-  max_length.times do |i|
-    args.each do |elem|
-      output << elem[i] if i < elem.length
-    end
-  end
-  output
+  # assumes no values coming in will contain nil. using dup because fill mutates
+  args.map{|e| e.dup.fill(nil, e.size...max_length)}.inject(:zip).flatten.compact
 end
 
-
-parse(TEST_LINE)
+File.open(ARGV[0]) do |f|
+  puts interleave(*(f.readlines.map {|l| parse(l)}.sort_by {|a| a.size})).shuffle
+end
