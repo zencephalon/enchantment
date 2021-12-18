@@ -1,0 +1,2 @@
+FEELS=(good,great,awesome)
+U feel FEELS
