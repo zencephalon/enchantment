@@ -1,0 +1,12 @@
+expand_verbs=grow|nurture|expand,generate
+good_nouns=wealth|opportunity|sovereignty|abundance|generosity
+enjoy_verbs=cherish,appreciate,enjoy,love
+
+U (find|discover|seize|happen upon|luck into) (opportunities|markets)
+U grow (wealthier|luckier|abundant)
+U (expand_verbs) (businesses|good_nouns)
+Your wealth grows (exponentially|steadily|suddenly|surprisingly)
+
+U (grow,nurture,expand,generate) wealth aligned with your (values,interests)
+
+U (enjoy_verbs) (growing,nurturing,expanding,generating) (good_nouns)

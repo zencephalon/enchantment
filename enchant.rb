@@ -53,7 +53,7 @@ def process_substitutions(lines)
   lines.each do |line|
     if line.include?('=')
       k, v = line.split('=')
-      subs[k] = v
+      subs[k] = v.chomp
     end
   end
   lines_without = lines.reject {|l| l.include?('=')}
@@ -62,12 +62,12 @@ def process_substitutions(lines)
     subs.each do |k, v|
       line.gsub!(k, v)
     end
-    line
+    line.chomp + "  \n"
   end
 end  
 
 File.open(ARGV[0]) do |f|
-  lines = f.readlines
+  lines = f.readlines.reject {|l| l.chomp.empty?}
 
   lines = process_substitutions(lines)
 
